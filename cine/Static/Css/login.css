@@ -1,0 +1,149 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('/Static/Img/cine-background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #F5F5F5;
+    position: relative;
+}
+
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 80px);
+}
+
+
+.login-container {
+    background: rgba(0, 0, 0, 0.85);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.3);
+    width: 350px;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 5px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    color: white;
+    font-size: 16px;
+    outline: none;
+}
+
+.input-group label {
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+    top: 0;
+    font-size: 12px;
+    color: white;
+}
+
+
+.btn {
+    width: 100%;
+    background: #ffcc00;
+    color: black;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #ff9900;
+}
+
+
+.links {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.links a {
+    color: white;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+.background-movies {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/static/Img/Fondoweb.gif') no-repeat center center fixed;
+    background-size: cover;
+    z-index: -1;
+    background-color: black;
+}
+

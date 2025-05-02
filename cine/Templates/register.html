@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Cine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">    
+</head>
+<body>
+
+    <div class="background-movies"></div>
+        
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+            <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+            <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+            <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+            <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>  
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <div class="overlay"></div>  
+    <div class="login-wrapper">
+        <div class="login-container">
+            <h2>Crear Cuenta</h2>
+            <form action="{{ url_for('register') }}" method="POST">
+                <div class="input-group">
+                    <input type="text" name="nombre" required placeholder=" ">
+                    <label>Nombre Completo</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" required placeholder=" ">
+                    <label>Correo Electrónico</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="direccion" required placeholder=" ">
+                    <label>Dirección</label>
+                </div>
+                <div class="input-group">
+                    <select name="tipo_id" required>
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="CE">Cédula Extranjera</option>
+                        <option value="Pasaporte">Pasaporte</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="numero_id" required placeholder=" ">
+                    <label>Número de Identificación</label>
+                </div>
+                <div class="input-group">
+                    <input type="tel" name="telefono" required placeholder=" ">
+                    <label>Número de Celular</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" required placeholder=" ">
+                    <label>Contraseña</label>
+                </div>
+                <button type="submit" class="btn">Registrarse</button>
+                <div class="links">
+                    <a href="{{ url_for('login') }}">Ya tengo una cuenta</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+
+</html>

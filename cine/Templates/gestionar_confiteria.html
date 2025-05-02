@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Confitería - CinePlus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gestionar.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+        </div>        
+        <ul class="nav-links">
+
+
+        
+            {% if 'user_id' in session and session['rol'] != 'administrativo' %}
+                <li><a href="#">Cartelera</a></li>
+                <li><a href="#">Confitería</a></li>
+                <li><a href="#">Promociones</a></li>
+
+                
+            {% elif 'user_id' in session and session['rol'] == 'administrativo' %}
+            
+            <li><a href="{{ url_for('listar_peliculas') }}">Gestionar Películas</a></li>
+            <li><a href="{{ url_for('gestionar_confiteria') }}">Gestionar Confitería</a></li>
+            <li><a href="{{ url_for('gestionar_funciones') }}">Gestionar Funciones</a></li>
+            <li><a href="{{ url_for('gestionar_salas') }}">Gestionar Salas</a></li>
+            {% endif %}
+        
+            {% if 'user_id' in session %}
+                <li class="user-menu">
+                    <a href="#" class="user-icon">
+                        <img src="{{ url_for('static', filename='img/user.gif') }}" alt="Usuario" width="40">
+                    </a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                        <li><a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+            {% else %}
+            <li><a href="#">Cartelera</a></li>
+            <li><a href="#">Confitería</a></li>
+            <li><a href="#">Promociones</a></li>
+
+                <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>
+
+            {% endif %}
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+    
+    <main class="container">
+        <h1>Gestión de Confitería</h1>
+        <a href="{{ url_for('crear_producto') }}" class="btn">Añadir Producto</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+
+                    <th>Imagen</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.id_producto }}</td>
+                    <td>{{ producto.nombre }}</td>
+
+
+                    <td>
+                        <img src="{{ url_for('static', filename=producto.imagen_confiteria) }}" alt="Imagen de {{ producto.nombre }}" width="100">
+
+                    </td>
+                    <td>$ {{ producto.precio }}</td>
+                    <td>{{ producto.stock }}</td>
+                    
+                          
+                    <td>
+                        <a href="{{ url_for('editar_producto', id_producto=producto.id_producto) }}" class="btn-edit">Editar</a>
+                        <a href="{{ url_for('eliminar_producto', id_producto=producto.id_producto) }}" class="btn-delete" onclick="return confirm('¿Seguro que deseas eliminar este producto?')">Eliminar</a>
+                    </td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    
+    <script src="{{ url_for('static', filename='js/confiteria.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+
+</body>
+</html>

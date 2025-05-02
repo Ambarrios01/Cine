@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+<header>
+    
+</header>
+<body>
+    <body>
+        <body>
+            <div class="background-movies"></div>
+        
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+                </div>        
+                <ul class="nav-links">
+
+    
+            
+                {% if 'user_id' in session and session['rol'] != 'administrativo' %}
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+                <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+                <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+                {% elif 'user_id' in session and session['rol'] == 'administrativo' %}
+                <li><a href="{{ url_for('listar_peliculas') }}">Gestionar Películas</a></li>
+                <li><a href="{{ url_for('gestionar_confiteria') }}">Gestionar Confitería</a></li>
+                <li><a href="{{ url_for('gestionar_funciones') }}">Gestionar Funciones</a></li>
+                <li><a href="{{ url_for('gestionar_salas') }}">Gestionar Salas</a></li>
+                {% endif %}
+            
+                {% if 'user_id' in session %}
+                    <li class="user-menu">
+                        <a href="#" class="user-icon">
+                            <img src="{{ url_for('static', filename='img/user.gif') }}" alt="Usuario" width="40">
+                        </a>
+                        <ul class="dropdown">
+                            <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                            <li><a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>
+                {% endif %}
+            </ul>
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        </nav>
+        
+
+        <main class="profile-container">
+            <section class="profile-card">
+                <div class="profile-header">
+                    <h2>👋 Bienvenido, {{ session['username'] }}</h2>
+                </div>
+                <div class="profile-details">
+                    <div class="profile-item">
+                        <span>Email:</span> <p>{{ session['email'] }}</p>
+                    </div>
+                    <div class="profile-item">
+                        <span>Dirección:</span> <p>{{ session['direccion'] }}</p>
+                    </div>
+                    <div class="profile-item">
+                        <span>Tipo de Identificación:</span> <p>{{ session['tipo_id'] }}</p>
+                    </div>
+                    <div class="profile-item">
+                        <span>Número de Identificación:</span> <p>{{ session['numero_id'] }}</p>
+                    </div>
+                    <div class="profile-item">
+                        <span>Teléfono:</span> <p>{{ session['telefono'] }}</p>
+                    </div>
+                </div>
+                <a href="{{ url_for('logout') }}" class="logout-btn">🚪 Cerrar Sesión</a>
+            </section>
+        </main>
+        
+        
+            
+        
+            <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+
+        </body>
+        
+        </html>

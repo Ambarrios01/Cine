@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinePlus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/editar.css') }}">
+
+    
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+        </div>        
+        <ul class="nav-links">
+
+
+        
+            {% if 'user_id' in session and session['rol'] != 'administrativo' %}
+                <li><a href="#">Cartelera</a></li>
+                <li><a href="#">Confitería</a></li>
+                <li><a href="#">Promociones</a></li>
+
+                
+            {% elif 'user_id' in session and session['rol'] == 'administrativo' %}
+            <li><a href="{{ url_for('listar_peliculas') }}">Gestionar Películas</a></li>
+            <li><a href="{{ url_for('gestionar_confiteria') }}">Gestionar Confitería</a></li>
+            <li><a href="{{ url_for('gestionar_funciones') }}">Gestionar Funciones</a></li>
+            <li><a href="{{ url_for('gestionar_salas') }}">Gestionar Salas</a></li>
+            {% endif %}
+        
+            {% if 'user_id' in session %}
+                <li class="user-menu">
+                    <a href="#" class="user-icon">
+                        <img src="{{ url_for('static', filename='img/user.gif') }}" alt="Usuario" width="40">
+                    </a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                        <li><a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+            {% else %}
+            <li><a href="#">Cartelera</a></li>
+            <li><a href="#">Confitería</a></li>
+            <li><a href="#">Promociones</a></li>
+
+                <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>
+
+            {% endif %}
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <div class="container">
+        <h2>Editar Sala</h2>
+        <form action="{{ url_for('editar_sala', id_sala=sala.id_sala) }}" method="POST">
+            <label for="nombre">Nombre de la Sala:</label>
+            <input type="text" id="nombre" name="nombre" value="{{ sala['nombre'] }}" required>
+    
+            <label for="capacidad">Capacidad (Número de Asientos):</label>
+            <input type="number" name="capacidad" id="capacidad" required readonly>
+            
+            <label for="tipo">Tipo:</label>
+            <select name="tipo" id="tipo" required onchange="actualizarCapacidad()">
+                <option value="2D">2D</option>
+                <option value="3D">3D</option>
+                <option value="IMAX">IMAX</option>
+            </select>
+            
+    
+            <button type="submit">Guardar Cambios</button>
+        </form>
+        <br>
+        <a class="volver" href="{{ url_for('gestionar_salas') }}">Volver a la lista</a>
+    </div>
+    
+    <script>
+        function actualizarCapacidad() {
+            const tipo = document.getElementById("tipo").value;
+            const capacidad = document.getElementById("capacidad");
+    
+            const capacidades = {
+                "2D": 105,
+                "3D": 150,
+                "IMAX": 240
+            };
+    
+            capacidad.value = capacidades[tipo]; // Asigna el valor correspondiente
+        }
+    
+        // 🚀 Asigna la capacidad inicial al cargar la página
+        document.addEventListener("DOMContentLoaded", actualizarCapacidad);
+    </script>
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+
+</html>

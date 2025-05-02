@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Asientos - {{ funcion.titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/asientos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/footer.css') }}">
+    
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+        </div>        
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+
+        
+            {% if 'user_id' in session and session['rol'] != 'administrativo' %}
+                <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+                <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+                <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+                
+
+                
+            {% elif 'user_id' in session and session['rol'] == 'administrativo' %}
+                <li><a href="{{ url_for('listar_peliculas') }}">Gestionar Películas</a></li>
+                <li><a href="{{ url_for('gestionar_confiteria') }}">Gestionar Confitería</a></li>
+                <li><a href="{{ url_for('gestionar_funciones') }}">Gestionar Funciones</a></li>
+                <li><a href="{{ url_for('gestionar_salas') }}">Gestionar Salas</a></li>
+            {% endif %}
+        
+            {% if 'user_id' in session %}
+                <li class="user-menu">
+                    <a href="#" class="user-icon">
+                        <img src="{{ url_for('static', filename='img/user.gif') }}" alt="Usuario" width="40">
+                    </a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                        <li><a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a></li>
+             
+                   </ul>
+                </li>
+            {% else %}
+            <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+            <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+            <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+            <li><a href="#info-cine-link">Información</a></li> 
+
+                <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>
+
+            {% endif %}
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <div class="container flex gap-[20px] justify-center">
+        <div class="item grow text-center">
+            <div class="pantalla-container">
+                <div class="pantalla"></div>
+            </div>
+
+        
+            
+
+            <div class="asientos">
+                {% if filas_ordenadas %}
+                    {% for fila, asientos_fila in filas_ordenadas.items() %}
+                        <div class="fila">
+                            <span class="fila-label">{{ fila }}</span> <!-- Letra de la fila -->
+                            {% for asiento in asientos_fila %}
+                                {% if asiento.id_asiento in ocupados %}
+                                    <button class="asiento ocupado" disabled>
+                                        {{ fila }}{{ asiento.numero }}
+                                    </button>
+                                {% else %}
+                                    <button class="asiento disponible" 
+                                            data-id="{{ asiento.id_asiento }}"
+                                            data-fila="{{ fila }}"
+                                            data-numero="{{ asiento.numero }}">
+                                        {{ fila }}{{ asiento.numero }}
+                                    </button>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="mensaje">No hay asientos disponibles.</p>
+                {% endif %}
+            </div>
+            
+   
+            
+        </div>
+        
+        <div class="item basis-[30%]">
+            <img src="{{ url_for('static', filename=pelicula.imagen_cartelera.replace('static/', '')) }}" 
+                 alt="{{ pelicula.titulo }}" class="imagen-pelicula">
+        
+            <h1>{{ funcion.titulo }}</h1>
+            <p class="info"> <strong>Duración:</strong> {{ funcion.duracion }} Minutos</p>
+            <p class="info"> <strong>Género:</strong> {{ funcion.genero }}</p>
+            <p class="info"> <strong>Horario:</strong> {{ funcion.horario }}</p>
+
+
+            <p class="info"><strong>Precio por asiento:</strong> $<span id="precioFuncion">{{ funcion.precio }}</span></p>
+            <p class="info"><strong>Total:</strong> $<span id="total">0</span></p>
+            
+
+   <p class="info"><strong> Asientos seleccionados:</strong> <span id="asientosSeleccionados">Ninguno</span></p>
+
+
+   <input type="hidden" id="funcionId" value="{{ funcion.id_funcion }}">
+
+   <a href="/seleccionar-combos?funcion_id={{ funcion.id_funcion }}" id="reservar">Seleccionar Combos y Golosinas</a>
+   
+        </div>
+        
+    </div>
+    
+
+
+<div class="espacio"></div>
+        
+    
+</div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>🎬 Hollywood Lights</h3>
+                <p>Vive la magia del cine con los estrenos más esperados y promociones exclusivas.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>🌟 Enlaces de Interés</h3>
+                <ul>
+                    <li><a href="{{ url_for('billboard') }}">🎥 Cartelera</a></li>
+                    <li><a href="#promociones">💰 Promociones</a></li>
+                    <li><a href="#ubicacion">📍 Ubicación</a></li>
+                    <li><a href="#contacto">📩 Contáctenos</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social">
+                <h3>📢 Síguenos</h3>
+                <ul class="social-icons">
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Hollywood Lights | Todos los derechos reservados 🎭</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/asientos.js') }}"></script>
+</body>
+</html> 
+

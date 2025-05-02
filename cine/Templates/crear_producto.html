@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Producto - Confitería</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/crear_pelicula.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+        </div>
+        <ul class="nav-links">
+
+
+            {% if 'user_id' in session and session['rol'] == 'administrativo' %}
+
+                <li><a href="{{ url_for('listar_peliculas') }}">Gestionar Películas</a></li>
+                <li><a href="{{ url_for('gestionar_confiteria') }}">Gestionar Confitería</a></li>
+                <li><a href="{{ url_for('gestionar_funciones') }}">Gestionar Funciones</a></li>
+                <li><a href="{{ url_for('gestionar_salas') }}">Gestionar Salas</a></li>
+            {% endif %}
+            {% if 'user_id' in session %}
+                <li class="user-menu">
+                    <a href="#" class="user-icon">
+                        <img src="{{ url_for('static', filename='img/user.gif') }}" alt="Usuario" width="40">
+                    </a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                        <li><a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>
+            {% endif %}
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <main class="container">
+        <h1>Añadir Nuevo Producto</h1>
+        <form action="{{ url_for('crear_producto') }}" method="post" enctype="multipart/form-data">
+            <label for="nombre">Nombre del Producto:</label>
+            <input type="text" name="nombre" id="nombre" required>
+
+            <label for="descripcion">Descripción:</label>
+            <textarea name="descripcion" id="descripcion" required></textarea>
+
+            <label for="precio">Precio:</label>
+            <input type="number" name="precio" id="precio" step="0.01" required>
+
+            <label for="stock">Stock:</label>
+            <input type="number" name="stock" id="stock" required>
+            <label for="imagen_confiteria">Imagen del Producto:</label>
+            <input type="file" name="imagen_confiteria" accept="image/*"><br> <!-- Asegura que solo acepte imágenes -->
+
+            <button type="submit" class="btn">Guardar Producto</button>
+        </form>
+        <a class="volver" href="{{ url_for('gestionar_confiteria') }}">Volver a la lista</a>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+</body>
+</html>

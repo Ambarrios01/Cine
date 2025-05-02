@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinePlus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    
+    
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+        </div>        
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+
+        
+            {% if 'user_id' in session and session['rol'] != 'administrativo' %}
+            <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+            <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+            <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+                
+
+                
+            {% elif 'user_id' in session and session['rol'] == 'administrativo' %}
+                <li><a href="{{ url_for('listar_peliculas') }}">Gestionar Películas</a></li>
+                <li><a href="{{ url_for('gestionar_confiteria') }}">Gestionar Confitería</a></li>
+                <li><a href="{{ url_for('gestionar_funciones') }}">Gestionar Funciones</a></li>
+                <li><a href="{{ url_for('gestionar_salas') }}">Gestionar Salas</a></li>
+            {% endif %}
+        
+            {% if 'user_id' in session %}
+                <li class="user-menu">
+                    <a href="#" class="user-icon">
+                        <img src="{{ url_for('static', filename='img/user.gif') }}" alt="Usuario" width="40">
+                    </a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                        <li><a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+            {% else %}
+            <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+            <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+            <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+            <li><a href="#info-cine-link">Información</a></li> 
+
+                <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>
+
+            {% endif %}
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+    
+
+    <section class="galeria">
+        <div class="galeria-content">
+            <h1>Bienvenido a Hollywood Lights</h1>
+            <p>Vive la magia del cine con la mejor calidad de imagen y sonido. ¡Las mejores películas te esperan en Hollywood Lights!</p>
+
+        </div>
+        <img src="{{ url_for('static', filename='img/450_1000 (1).jpg') }}" alt="Película 1">
+        <img src="{{ url_for('static', filename='img/450_1000.jpg') }}" alt="Película 2">
+        <img src="{{ url_for('static', filename='img/Flore-Maquin-movie-posters-illustration-django-.webp') }}" alt="Película 3">
+        <img src="{{ url_for('static', filename='img/image_51013278.jpeg') }}" alt="Película 4">
+        <img src="{{ url_for('static', filename='img/deadpool-2-david-leitch-2018.webp') }}" alt="Película 5">
+        <img src="{{ url_for('static', filename='img/poster_lord-of-war.webp') }}" alt="Película 6">
+        
+    </section>
+    
+    
+    <section id="cartelera" class="cartelera">
+        <h2>Peliculas en cartelera</h2>
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                {% for genero, peliculas in peliculas_por_genero.items() %}
+                    {% for pelicula in peliculas %}
+                        <div class="swiper-slide">
+                            <a href="{{ url_for('detalle_pelicula', id_pelicula=pelicula.id_pelicula) }}">
+                                <img src="{{ pelicula.imagen_cartelera }}" alt="{{ pelicula.titulo }}">
+                                <div class="titulo">{{ pelicula.titulo }}</div>
+                                <div class="duracion">Duracion: {{ pelicula.duracion }} Min</div>
+                                <div class="genero">Genero: {{ pelicula.genero }}</div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+    
+        </div>
+    </section>
+
+
+    
+
+    <section class="promociones">
+        <h2> Promociones Especiales </h2>
+        <div class="promociones-grid">
+           
+            <div class="promocion-card">
+                <img src="https://th.bing.com/th/id/OIP.T8rqoGjF9hhHBlgq_iuQ-QHaHa?rs=1&pid=ImgDetMain" alt="Promoción 2x1">
+                <h3>2x1 en Martes</h3>
+                <p>Disfruta de dos entradas por el precio de uno todos los martes. ¡No te lo pierdas!</p>
+                <button class="btn-promo">Más información</button>
+            </div>
+            
+            <div class="promocion-card">
+                <img src="https://th.bing.com/th/id/OIP.DrxxzlEnXVaGWwAjmhC1fwHaHa?rs=1&pid=ImgDetMain" alt="Palomitas Gratis">
+                <h3>Palomitas Gratis</h3>
+                <p>Compra una entrada y llévate unas palomitas grandes gratis. Válido solo los miércoles.</p>
+                <button class="btn-promo">Más información</button>
+            </div>
+            
+            <div class="promocion-card">
+                <img src="https://th.bing.com/th/id/OIP._0Zzta4blqK-VYjSjJRwmQHaGT?rs=1&pid=ImgDetMain alt="Promoción Familiar">
+                <h3>Plan Familiar</h3>
+                <p>4 entradas + 4 combos de palomitas y bebidas por solo $65.000 ¡Perfecto para familias!</p>
+                <button class="btn-promo">Más información</button>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+
+
+<section class="info-cine" id="info-cine-link">
+    <div class="contenedor">
+
+        <div class="historia">
+            <h2>🎥 Nuestra Historia</h2>
+            <p>Desde nuestra apertura en el año 2000, hemos sido el destino favorito de los amantes del cine. Con más de dos décadas de experiencia, hemos proyectado miles de películas, desde grandes estrenos hasta clásicos inolvidables.</p>
+        </div>
+
+
+        <div class="tecnologia">
+            <h2>🎨 Tecnología de Última Generación</h2>
+            <ul>
+                <li>✅ Pantallas IMAX y 4D para una inmersión total.</li>
+                <li>✅ Sonido Dolby Atmos que te hará sentir dentro de la película.</li>
+                <li>✅ Salas VIP con asientos reclinables y servicio personalizado.</li>
+            </ul>
+        </div>
+
+
+        <div class="experiencia">
+            <h2>🍔 Más que Cine: Una Experiencia Completa</h2>
+            <ul>
+                <li>🍕 Zona de comida con hamburguesas, pizzas, sushi y más.</li>
+                <li>🎮 Área de entretenimiento con videojuegos y simuladores.</li>
+                <li>📸 Espacios temáticos para tomarte fotos con tus personajes favoritos.</li>
+            </ul>
+        </div>
+
+
+        <div class="eventos">
+            <h2>🎭 Eventos Especiales</h2>
+            <ul>
+                <li>🗓 Maratones de sagas y funciones exclusivas.</li>
+                <li>🎤 Encuentros con directores y actores.</li>
+                <li>🕹️ Torneos de videojuegos en pantalla gigante.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+<section class="ubicacion">
+    <h2>📍 Encuéntranos Aquí</h2>
+    <p>Visítanos en nuestra sede principal y vive la mejor experiencia cinematográfica.</p>
+    
+
+    <div class="mapa">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509364!2d144.9556515153157!3d-37.81732797975127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d5df1f58d9d%3A0x5045675218ce6e0!2sMelbourne%20CBD!5e0!3m2!1sen!2sau!4v1637832321384!5m2!1sen!2sau" 
+            width="100%" 
+            height="350" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy">
+        </iframe>
+    </div>
+</section>
+
+    
+
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>🎬 Hollywood Lights</h3>
+                <p>Vive la magia del cine con los estrenos más esperados y promociones exclusivas.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>🌟 Enlaces de Interés</h3>
+                <ul>
+                    <li><a href="{{ url_for('billboard') }}">🎥 Cartelera</a></li>
+                    <li><a href="#promociones">💰 Promociones</a></li>
+                    <li><a href="#ubicacion">📍 Ubicación</a></li>
+                    <li><a href="#contacto">📩 Contáctenos</a></li>
+                </ul>
+                
+            </div>
+            <div class="footer-section social">
+                <h3>📢 Síguenos</h3>
+                <ul class="social-icons">
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Hollywood Lights | Todos los derechos reservados 🎭</p>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+    var swiper = new Swiper(".swiper", {
+        slidesPerView: 3,
+        spaceBetween: 0,
+        centeredSlides: true,
+        loop: true,
+        autoplay: {
+            delay: 3000, // Cambia de slide cada 3 segundos
+            disableOnInteraction: false, // Evita que se detenga al interactuar
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+            
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 5 }
+        }
+    });
+    
+    // Variable para rastrear el último slide clicado
+    let lastClickedIndex = null;
+    
+    document.querySelectorAll(".swiper-slide").forEach(slide => {
+        slide.addEventListener("click", function (event) {
+            event.preventDefault(); // Evita la redirección inmediata
+    
+            let clickedIndex = this.getAttribute("data-swiper-slide-index"); 
+            let activeIndex = swiper.realIndex; // Índice real del slide centrado
+    
+            if (clickedIndex == activeIndex) {
+                // 📌 Si el usuario hace clic en la película central por segunda vez, abrir detalles
+                if (clickedIndex) {
+                    window.location.href = this.querySelector("a").href;
+                }
+            } else {
+                // 📌 Si la película no está en el centro, moverla con corrección de índice en loop
+                let targetIndex = parseInt(clickedIndex);
+                swiper.slideToLoop(targetIndex, 500);
+            }
+    
+            // 📌 Guardar el último índice clicado
+            lastClickedIndex = clickedIndex;
+    
+            // 📌 Reiniciar la variable después de un tiempo para evitar clics accidentales
+            setTimeout(() => {
+                lastClickedIndex = null;
+            }, 2000); // Si no se hace el segundo clic en 2 segundos, se reinicia
+        });
+    });
+    
+    
+    
+    </script>
+</html>

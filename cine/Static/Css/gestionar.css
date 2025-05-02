@@ -1,0 +1,122 @@
+/* General */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #F5F5F5;
+}
+
+
+
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background: #121212;
+    box-shadow: 0 0 10px rgba(195, 7, 63, 0.3);
+    border-radius: 8px;
+
+    padding-top: 6% ;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3rem;
+    color: #FFD700;
+    margin-bottom: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 2px solid #FFD700;
+
+}
+
+.btn:hover {
+    background: #444;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #FFD700;
+    padding: 8px;
+    text-align: center;
+    color: white;
+}
+
+.table th {
+    background-color: #333;
+    color: white;
+}
+
+.btn-edit {
+    background: #444;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+    border-radius: 3px;
+    border: 2px solid #FFD700;
+    transition: background 0.3s;
+}
+
+.btn-edit:hover {
+    background: #555;
+}
+
+.btn-delete {
+    background: #C3073F;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+    border-radius: 3px;
+    border: 2px solid #FFD700;
+    transition: background 0.3s;
+}
+
+.btn-delete:hover {
+    background: #9A0423;
+}
+
+
+@media (max-width: 1020px) {
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .table th, .table td {
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .btn-edit, .btn-delete {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .table th, .table td {
+        padding: 4px;
+        font-size: 12px;
+    }
+
+    .btn-edit, .btn-delete {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}

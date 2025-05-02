@@ -1,0 +1,116 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #F5F5F5;
+}
+
+
+.container {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    margin: 0px auto;
+    padding-top: 6% !important;
+}
+
+h1 {
+    text-align: center;
+    color: #FFD700;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 12px;
+    color: #FFD700;
+    font-size: 14px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border 0.3s;
+    height: 45px; 
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px; 
+}
+
+
+input:focus, textarea:focus, select:focus {
+    border-color: #D32F2F;
+    outline: none;
+    box-shadow: 0 0 5px rgba(211, 47, 47, 0.3);
+}
+
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFD700;
+    border: none;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #e6c200;
+    transform: scale(1.05);
+}
+
+
+.volver {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.volver:hover {
+    text-decoration: underline;
+    color: #9A0423;
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    input, textarea, select {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

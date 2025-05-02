@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Cine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script defer src="script.js"></script>
+</head>
+<header>
+    
+</header>
+<body>
+    <body>
+        <body>
+            <div class="background-movies"></div>
+        
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+
+                </div>
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+                    <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+                    <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+                    <li><a href="#info-cine-link">Información</a></li> 
+                    <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>    
+                </ul>
+                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            </nav>
+        
+            <div class="overlay"></div> 
+        
+            <div class="login-wrapper">
+                <div class="login-container">
+                    <h2>Bienvenido a Hollywood Lights</h2>
+                    <p>Disfruta la mejor experiencia cinematográfica</p>
+                    <form action="{{ url_for('login') }}" method="POST">
+                        <div class="input-group">
+                            <input type="email" name="email" required placeholder=" ">
+                            <label>Correo Electrónico</label>
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="password" name="password" required placeholder=" ">
+                            <label>Contraseña</label>
+                        </div>
+                        
+                        <button type="submit" class="btn">Iniciar Sesión</button>
+                        <div class="links">
+                            <a href="{{ url_for('forgot_password') }}">¿Olvidaste tu contraseña?</a>
+                            <a href="{{ url_for('register') }}">Crear cuenta</a>                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        
+            <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+
+        </body>
+        </html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Películas - CinePlus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gestionar.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+        </div>
+        <ul class="nav-links">
+
+            {% if 'user_id' in session and session['rol'] == 'administrativo' %}
+                <li><a href="{{ url_for('listar_peliculas') }}">Gestionar Películas</a></li>
+                <li><a href="{{ url_for('gestionar_confiteria') }}">Gestionar Confitería</a></li>
+                <li><a href="{{ url_for('gestionar_funciones') }}">Gestionar Funciones</a></li>
+                <li><a href="{{ url_for('gestionar_salas') }}">Gestionar Salas</a></li>
+            {% endif %}
+            {% if 'user_id' in session %}
+                <li class="user-menu">
+                    <a href="#" class="user-icon">
+                        <img src="{{ url_for('static', filename='img/user.gif') }}" alt="Usuario" width="40">
+                    </a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                        <li><a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>
+            {% endif %}
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+    
+    <main class="container">
+        <h1>Gestionar Películas</h1>
+        <a href="{{ url_for('crear_pelicula') }}" class="btn">Añadir Película</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Duración</th>
+                    <th>Género</th>
+                    <th>Clasificación</th>
+                    <th>Imagen</th>
+                    <th>Video</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pelicula in peliculas %}
+                <tr>
+                    <td>{{ pelicula.titulo }}</td>
+                    <td>{{ pelicula.duracion }} min</td>
+                    <td>{{ pelicula.genero }}</td>
+                    <td>{{ pelicula.clasificacion }}</td>
+                    <td>
+                        <img src="{{ url_for('static', filename=pelicula.imagen_cartelera.split('static/')[-1]) }}" alt="Cartelera de {{ pelicula.titulo }}" width="100">
+                    </td>
+                    <td>
+                        <iframe width="150" height="100"
+                        src="https://www.youtube.com/embed/{{ pelicula.video_pelicula | replace('https://www.youtube.com/watch?v=', '') }}"
+                        frameborder="0" allowfullscreen>
+                        </iframe>
+                    
+                    </td>
+                    <td>
+                        <a href="{{ url_for('editar_pelicula', id_pelicula=pelicula.id_pelicula) }}" class="btn-edit">Editar</a>
+                        <a href="{{ url_for('eliminar_pelicula', id_pelicula=pelicula.id_pelicula) }}" class="btn-delete" onclick="return confirm('¿Seguro que deseas eliminar esta película?')">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    
+    
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+</body>
+</html>

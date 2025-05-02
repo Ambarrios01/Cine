@@ -1,0 +1,252 @@
+/* General */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #F5F5F5;
+
+}
+.detalle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5.3%;
+}
+
+/* 🎬 Banner con fondo difuminado */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+}
+
+.banner-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+}
+
+/* 🎥 Contenido del banner */
+.banner-content {
+    display: flex;
+    position: relative;
+    z-index: 1;
+    gap: 30px;
+    align-items: center;
+}
+
+/* 🎞️ Imagen de la película sobresaliente */
+.imagen-col img {
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    transform: translateY(20px);
+    z-index: 2; /* Para que esté sobre el banner */
+}
+
+/* 📽️ Tráiler más grande */
+.trailer-col iframe,
+.trailer-col video {
+    width: 650px;
+    height: 380px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+/* Contenedor principal */
+.info-calendar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90%;
+    margin: 40px auto;
+}
+
+/* Información de la película (más delgada) */
+.info-container {
+    width: 20%;
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 20px;
+    margin-left: 17%;
+    font-size: 16px;
+    line-height: 1.4;
+    text-align: justify;
+
+}
+
+.info-container h2 {
+    text-align: left;
+    font-size: 22px;
+    color: #FFD700;
+}
+
+.info-container h3 {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #FFD700;
+}
+
+/* 📅 Contenedor principal */
+.calendar-container {
+    width: 65%;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* 🎟️ Título del calendario */
+.calendar-container h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #FFD700;
+}
+
+/* 🔘 Botones de fechas */
+.calendar-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.fecha-btn {
+    background: none;
+    border: 2px solid #FFD700;
+    color: #FFD700;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.fecha-btn:hover {
+    background: #FFD700;
+    color: black;
+}
+
+/* 🟡 Botón activo */
+.fecha-btn.activo {
+    background: #FFD700;
+    color: black;
+}
+
+/* 📆 Lista de funciones */
+.fecha {
+    display: none;
+    text-align: center;
+    padding: 10px;
+}
+
+/* 🕒 Contenedor de horarios en fila */
+.fecha ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap: 10px; /* Espaciado entre los horarios */
+}
+
+
+
+.fecha li:hover {
+    background: #FFD700;
+    color: black;
+    transform: scale(1.1);
+}
+    /* ⏰ Estilo de cada horario */
+    .hora button {
+        font-size: 16px;
+        padding: 8px 12px;
+        color: #F5F5F5;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .hora button:hover {
+        background: #FFD700;
+        color: black;
+        transform: scale(1.1);
+    }
+
+/* 📌 Ajustes para dispositivos móviles */
+@media (max-width: 1000px) {
+    .banner {
+        height: 1000px; /* Reduce la altura del banner en pantallas más pequeñas */
+        padding-top: 70%;
+
+    }
+
+    .banner-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .imagen-col img {
+        width: 300px; /* Reduce el tamaño de la imagen en tablets */
+    }
+
+    .trailer-col iframe,
+    .trailer-col video {
+        width: 500px;
+        height: 300px;
+    }
+
+    .info-calendar-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info-container {
+        width: 90%;
+        min-height: auto;
+        margin-bottom: 20px;
+    }
+
+    .calendar-container {
+        width: 100%;
+    }
+}
+
+/* 📌 Ajustes para móviles */
+@media (max-width: 768px) {
+    .banner {
+        height: 700px;
+        margin-top: -60%;
+
+    }
+
+    .imagen-col img {
+        width: 250px; /* Ajuste para móviles */
+    }
+
+    .trailer-col iframe,
+    .trailer-col video {
+        width: 100%;
+        height: 250px;
+    }
+
+    .info-container {
+        width: 95%;
+        text-align: left;
+    }
+
+    .calendar-container {
+        width: 100%;
+    }
+}

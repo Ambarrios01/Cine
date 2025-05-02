@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promociones</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/promociones.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/footer.css') }}">
+    
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+        </div>        
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+
+        
+            {% if 'user_id' in session and session['rol'] != 'administrativo' %}
+            <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+            <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+                <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+                
+
+                
+            {% elif 'user_id' in session and session['rol'] == 'administrativo' %}
+                <li><a href="{{ url_for('listar_peliculas') }}">Gestionar Películas</a></li>
+                <li><a href="{{ url_for('gestionar_confiteria') }}">Gestionar Confitería</a></li>
+                <li><a href="{{ url_for('gestionar_funciones') }}">Gestionar Funciones</a></li>
+                <li><a href="{{ url_for('gestionar_salas') }}">Gestionar Salas</a></li>
+            {% endif %}
+        
+            {% if 'user_id' in session %}
+                <li class="user-menu">
+                    <a href="#" class="user-icon">
+                        <img src="{{ url_for('static', filename='img/user.gif') }}" alt="Usuario" width="40">
+                    </a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                        <li><a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+            {% else %}
+            <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+            <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+            <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+            <li><a href="#info-cine-link">Información</a></li> 
+
+                <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>
+
+            {% endif %}
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    
+    <section class="promociones">
+        <h2> Promociones Especiales </h2>
+        <div class="promociones-grid">
+           
+            <div class="promocion-card">
+                <img src="https://th.bing.com/th/id/OIP.T8rqoGjF9hhHBlgq_iuQ-QHaHa?rs=1&pid=ImgDetMain" alt="Promoción 2x1">
+                <h3>2x1 en Martes</h3>
+                <p>Disfruta de dos entradas por el precio de uno todos los martes. ¡No te lo pierdas!</p>
+                <button class="btn-promo">Más información</button>
+            </div>
+            
+            <div class="promocion-card">
+                <img src="https://th.bing.com/th/id/OIP.DrxxzlEnXVaGWwAjmhC1fwHaHa?rs=1&pid=ImgDetMain" alt="Palomitas Gratis">
+                <h3>Palomitas Gratis</h3>
+                <p>Compra una entrada y llévate unas palomitas grandes gratis. Válido solo los miércoles.</p>
+                <button class="btn-promo">Más información</button>
+            </div>
+            
+            <div class="promocion-card">
+                <img src="https://th.bing.com/th/id/OIP._0Zzta4blqK-VYjSjJRwmQHaGT?rs=1&pid=ImgDetMain alt="Promoción Familiar">
+                <h3>Plan Familiar</h3>
+                <p>4 entradas + 4 combos de palomitas y bebidas por solo $65.000 ¡Perfecto para familias!</p>
+                <button class="btn-promo">Más información</button>
+            </div>
+        </div>
+    </section>
+    
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>🎬 Hollywood Lights</h3>
+                <p>Vive la magia del cine con los estrenos más esperados y promociones exclusivas.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>🌟 Enlaces de Interés</h3>
+                <ul>
+                    <li><a href="{{ url_for('billboard') }}">🎥 Cartelera</a></li>
+                    <li><a href="#promociones">💰 Promociones</a></li>
+                    <li><a href="#ubicacion">📍 Ubicación</a></li>
+                    <li><a href="#contacto">📩 Contáctenos</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social">
+                <h3>📢 Síguenos</h3>
+                <ul class="social-icons">
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Hollywood Lights | Todos los derechos reservados 🎭</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+</body>
+</html>

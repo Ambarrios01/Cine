@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Asientos - {{ funcion.titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/asientos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/combos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Css/footer.css') }}">
+    
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/Hollywood__3_-removebg-preview.png') }}" alt="CinePlus Logo">
+        </div>        
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}">Inicio</a></li>
+
+        
+            {% if 'user_id' in session and session['rol'] != 'administrativo' %}
+                <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+                <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+                <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+                
+
+                
+            {% elif 'user_id' in session and session['rol'] == 'administrativo' %}
+                <li><a href="{{ url_for('listar_peliculas') }}">Gestionar Películas</a></li>
+                <li><a href="{{ url_for('gestionar_confiteria') }}">Gestionar Confitería</a></li>
+                <li><a href="{{ url_for('gestionar_funciones') }}">Gestionar Funciones</a></li>
+                <li><a href="{{ url_for('gestionar_salas') }}">Gestionar Salas</a></li>
+            {% endif %}
+        
+            {% if 'user_id' in session %}
+                <li class="user-menu">
+                    <a href="#" class="user-icon">
+                        <img src="{{ url_for('static', filename='img/user.gif') }}" alt="Usuario" width="40">
+                    </a>
+                    <ul class="dropdown">
+                        <li><a href="{{ url_for('profile') }}">Perfil</a></li>
+                        <li><a href="{{ url_for('logout') }}" class="logout-btn">Cerrar Sesión</a></li>
+             
+                   </ul>
+                </li>
+            {% else %}
+            <li><a href="{{ url_for('billboard') }}">Cartelera</a></li>
+            <li><a href="{{ url_for('confectionery') }}">Confitería</a></li>
+            <li><a href="{{ url_for('promociones') }}">Promociones</a></li>
+            <li><a href="#info-cine-link">Información</a></li> 
+
+                <li><a href="{{ url_for('login') }}">Regístrate / Login</a></li>
+
+            {% endif %}
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <div class="container flex gap-[10px] justify-center">
+        <!-- Contenedor para los detalles de la película y el total -->
+        <div class="item grow text-center">
+            <h2 class="titulo-seccion">Productos disponibles</h2>
+            {% for combo in confiteria %}
+            <div class="col-md-12 combo-item mb-4" id="combo-{{ combo.id_combo }}">
+                <div class="card-horizontal">
+                    <div class="card-image">
+                        <img src="{{ url_for('static', filename=combo.imagen_confiteria) }}" alt="Imagen de {{ combo.nombre }}">
+                    </div>
+                    <div class="card-details">
+                        <h5 class="card-title">{{ combo.nombre }}</h5>
+                        <p class="card-text">Precio: $<span class="precio-combo">{{ combo.precio }}</span></p>
+                        <p class="card-text">{{ combo.descripcion }}</p>
+                        
+                        <!-- Campo de cantidad independiente por combo -->
+                        <div class="d-flex justify-content-center mt-2">
+                            <input type="number" class="cantidad-combo" id="cantidad-{{ combo.id_combo }}" min="1" value="1">
+                            <button type="button" class="btn btn-primary btn-sm btn-anadir" data-id="{{ combo.id_combo }}" data-nombre="{{ combo.nombre }}" data-precio="{{ combo.precio }}">
+                                Añadir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        
+    
+        <div class="item funcion-info text-center">
+            <!-- Mostrar imagen de la película -->
+            <img class="cartelera img-fluid mb-4" src="{{ funcion.imagen_cartelera }}" alt="Imagen de la película">
+            
+            <h2 class="titulo-funcion">{{ funcion.titulo }}</h2>
+            
+            <p><strong>Horario:</strong> {{ funcion.horario }}</p>
+            <p><strong>Duración:</strong> {{ funcion.duracion }} Minutos</p>
+            <p><strong>Género:</strong> {{ funcion.genero }}</p>
+            <p class="info"> <strong>Horario:</strong> {{ funcion.horario }}</p>
+
+            
+            
+            <p><strong>Precio por asiento:</strong> $<span id="precio" data-precio="{{ funcion.precio }}">{{ funcion.precio }}</span></p>
+            <!-- En tu HTML de los asientos y precio -->
+            <span id="precio" data-precio="{{ funcion.precio }}">{{ funcion.precio }}</span>
+
+            {% if session['asientos_seleccionados'] %}
+                <span id="asientosSeleccionados" data-cantidad="{{ session['asientos_seleccionados'] | length }}">
+                    {{ session['asientos_seleccionados'] | join(', ') }}
+                </span>
+            {% else %}
+                <span id="asientosSeleccionados" data-cantidad="0">Ninguno</span>
+            {% endif %}
+            
+            
+    <!-- Aquí se mostrarán los combos seleccionados -->
+    <div class="mt-4">
+        <h4>Combos seleccionados:</h4>
+        <ul id="listaCombos" class="list-unstyled"></ul>
+    </div>
+            
+            
+            <p><strong>Total:</strong> $<span id="total">0</span></p>
+            
+            <!-- Botón para proceder al pago -->
+            <div class="mt-4">
+                <a href="{{ url_for('pago', funcion_id=funcion.id_funcion) }}" class="btn btn-success">
+                    Proceder a Pago
+                </a>
+            </div>
+        </div>
+        
+    
+    
+</div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>🎬 Hollywood Lights</h3>
+                <p>Vive la magia del cine con los estrenos más esperados y promociones exclusivas.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>🌟 Enlaces de Interés</h3>
+                <ul>
+                    <li><a href="{{ url_for('billboard') }}">🎥 Cartelera</a></li>
+                    <li><a href="#promociones">💰 Promociones</a></li>
+                    <li><a href="#ubicacion">📍 Ubicación</a></li>
+                    <li><a href="#contacto">📩 Contáctenos</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social">
+                <h3>📢 Síguenos</h3>
+                <ul class="social-icons">
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Hollywood Lights | Todos los derechos reservados 🎭</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/asientos.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/combos.js') }}"></script>
+
+
+
+
+</body>
+</html> 
+

@@ -1,0 +1,171 @@
+/* General */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #F5F5F5;
+
+}
+.container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding-top: 8%;
+  }
+
+  
+  .item:nth-child(1) {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .item:nth-child(2) {
+    flex-basis: 30%;
+  }
+  
+  .pantalla-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    
+    perspective: 600px; /* Da profundidad */
+}
+
+.pantalla {
+    background-color: #fff; /* Color oscuro como pantalla apagada */
+    height: 150px;
+    width: 80%;
+    margin: 15px 0;
+    transform: rotateX(-45deg);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.7); /* Sombra más realista */
+    border-radius: 10px; /* Esquinas redondeadas */
+    border: 2px solid #000; /* Marco negro */
+
+}
+
+/* Contenedor de los asientos */
+.asientos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+}
+
+.fila {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 15px;
+}
+
+.fila-label {
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 8px;
+  
+}
+/* Estilos simplificados de los asientos con forma de silla de cine */
+.asiento {
+  width: 45px;
+  height: 50px;
+  border-radius: 5px;
+  border: 2px solid #222;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #B71C1C; /* Rojo típico de sillas de cine */
+  color: white;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Asiento disponible */
+.asiento.disponible {
+  background-color: green;
+}
+
+.asiento.disponible:hover {
+  background-color: #006400;
+  transform: translateY(-2px);
+}
+
+
+
+.asiento.seleccionado {
+  background-color: #FFC107;
+  border-color: #E0A800;
+  color: black;
+}
+
+/* Asiento ocupado */
+.asiento.ocupado {
+  background-color: #D32F2F;
+  color: white;
+  cursor: not-allowed;
+  border: 2px solid #A00;
+}
+
+/* Botón de reservar */
+#reservar {
+  margin-top: 30px;
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: green; /* Un azul más suave */
+  color: white;
+  border: none;
+  border-radius: 50px; /* Bordes redondeados para un estilo más suave */
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidad */
+  transition: all 0.3s ease; /* Transición suave para los efectos */
+  font-weight: bold;
+  text-transform: uppercase; /* Mayúsculas para un toque más profesional */
+  text-decoration: none;
+}
+
+#reservar:hover {
+  background-color: green; /* Azul más oscuro al pasar el ratón */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más profunda para el hover */
+  transform: translateY(-3px); /* Sutil efecto de elevarse */
+}
+
+#reservar:active {
+  transform: translateY(0); /* Vuelve a la posición original cuando se hace clic */
+}
+
+
+.imagen-pelicula {
+  width: 100%; /* Se adapta al contenedor */
+  max-width: 400px; /* Máximo tamaño para evitar que se agrande demasiado */
+  height: auto; /* Mantiene la proporción */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra elegante */
+  display: block; /* Evita espacios innecesarios */
+  margin-top: 7%;
+  transition: transform 0.3s ease-in-out; /* Efecto al pasar el mouse */
+}
+
+
+.espacio{
+  margin-top: 5%;
+}
+
+
+.info p {
+  font-size: 0.95rem;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.info strong {
+  color: #e53935;
+  font-weight: bold;
+}
